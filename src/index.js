@@ -1,5 +1,5 @@
 import { schema, normalize } from "normalizr";
-// import axios from "axios";
+
 const data = [{
     "id": "student-1",
     "name": "Mango",
@@ -75,28 +75,16 @@ const data = [{
 }]
 
 
+const instructorSchema = new schema.Entity('instructor');
 const courseSchema = new schema.Entity('courses', {
     instructors: [instructorSchema]
 });
 const studentSchema = new schema.Entity('students', {
     courses: [courseSchema],
 });
-const instructorSchema = new schema.Entity('instructor');
-
-
-// const dataFromBE = axios.get('https://api.myjson.com/bins/y355u')
-//     .then(({
-//             data,
-//             status
-//         }) => {
-//             if (status === 200) {
-//                 return data;
-//             }
-//         }
-
-//     )
 
 console.log("data:" , data);
-const normalizedData = normalize(data[0], studentSchema );
+
+const normalizedData = normalize(data, [studentSchema] );
 
 console.log("normalizedData:", normalizedData);
